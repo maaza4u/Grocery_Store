@@ -1,103 +1,117 @@
 import React from "react";
 import { useAppContext } from "../context/AppContext";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Login = () => {
-  const { setShowUserLogin,setUser } = useAppContext();
+  const { setShowUserLogin, setUser } = useAppContext();
 
   const [state, setState] = React.useState("login");
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     setUser({
-      name: "gourab ganguly",
-      email: "gourab@gmai.com",
+      name: "Gourab Ganguly",
+      email: "gourab@gmail.com"
     });
-      
     setShowUserLogin(false);
-  }
+  };
 
   return (
-    <div
-      onClick={() => {
-        setShowUserLogin(false);
-      }}
-      className="fixed top-0 bottom-0 left-0 right-0 z-30 flex items-center text-sm text-gray-600
-    bg-black/50"
-    >
-      <form
-        onSubmit={onSubmitHandler}
-        onClick={(e) => e.stopPropagation()}
-        className="flex flex-col gap-4 m-auto items-start p-8 py-12 w-80 sm:w-[352px] rounded-lg shadow-xl border border-gray-200 bg-white"
+    <AnimatePresence>
+      <motion.div
+        onClick={() => setShowUserLogin(false)}
+        className="fixed inset-0 z-40 bg-black/60 backdrop-blur-md flex items-center justify-center px-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
       >
-        <p className="text-2xl font-medium m-auto">
-          <span className="text-primary">User</span>{" "}
-          {state === "login" ? "Login" : "Sign Up"}
-        </p>
-        {state === "register" && (
+        <motion.form
+          onClick={(e) => e.stopPropagation()}
+          onSubmit={onSubmitHandler}
+          className="bg-white/90 backdrop-blur-sm shadow-xl border border-gray-200 rounded-2xl px-6 py-8 w-full max-w-md flex flex-col gap-6"
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 60 }}
+          transition={{ type: "spring", stiffness: 150, damping: 20 }}
+        >
+          <h2 className="text-3xl font-semibold text-center text-gray-800">
+            {state === "login" ? "Welcome Back 👋" : "Create an Account 📝"}
+          </h2>
+
+          {state === "register" && (
+            <div className="w-full">
+              <label className="text-sm font-medium text-gray-700">Name</label>
+              <input
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+                placeholder="Your name"
+                className="mt-1 px-4 py-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+                type="text"
+                required
+              />
+            </div>
+          )}
+
           <div className="w-full">
-            <p>Name</p>
+            <label className="text-sm font-medium text-gray-700">Email</label>
             <input
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-              placeholder="type here"
-              className="border border-gray-200 rounded w-full p-2 mt-1 outline-primary"
-              type="text"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              placeholder="you@example.com"
+              className="mt-1 px-4 py-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+              type="email"
               required
             />
           </div>
-        )}
-        <div className="w-full ">
-          <p>Email</p>
-          <input
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            placeholder="type here"
-            className="border border-gray-200 rounded w-full p-2 mt-1 outline-primary"
-            type="email"
-            required
-          />
-        </div>
-        <div className="w-full ">
-          <p>Password</p>
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-            placeholder="type here"
-            className="border border-gray-200 rounded w-full p-2 mt-1 outline-primary"
-            type="password"
-            required
-          />
-        </div>
-        {state === "register" ? (
-          <p>
-            Already have account?{" "}
-            <span
-              onClick={() => setState("login")}
-              className="text-primary cursor-pointer"
-            >
-              click here
-            </span>
+
+          <div className="w-full">
+            <label className="text-sm font-medium text-gray-700">Password</label>
+            <input
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              placeholder="********"
+              className="mt-1 px-4 py-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+              type="password"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full py-2 rounded-lg bg-primary text-white font-semibold hover:bg-primary-dull transition-all"
+          >
+            {state === "register" ? "Sign Up" : "Login"}
+          </button>
+
+          <p className="text-sm text-center text-gray-600">
+            {state === "login" ? (
+              <>
+                Don't have an account?{" "}
+                <span
+                  onClick={() => setState("register")}
+                  className="text-primary font-medium cursor-pointer hover:underline"
+                >
+                  Sign Up
+                </span>
+              </>
+            ) : (
+              <>
+                Already have an account?{" "}
+                <span
+                  onClick={() => setState("login")}
+                  className="text-primary font-medium cursor-pointer hover:underline"
+                >
+                  Login
+                </span>
+              </>
+            )}
           </p>
-        ) : (
-          <p>
-            Create an account?{" "}
-            <span
-              onClick={() => setState("register")}
-              className="text-primary  cursor-pointer"
-            >
-              click here
-            </span>
-          </p>
-        )}
-        <button className="bg-primary hover:bg-primary-dull transition-all text-white w-full py-2 rounded-md cursor-pointer">
-          {state === "register" ? "Create Account" : "Login"}
-        </button>
-      </form>
-    </div>
+        </motion.form>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

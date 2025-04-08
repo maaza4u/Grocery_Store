@@ -4,26 +4,32 @@ import { assets } from "../assets/assets";
 import { useAppContext } from "../context/AppContext";
 
 const ProductCrad = ({ product }) => {
-  const [count, setCount] = React.useState(0);
-
   const { addToCart, removeFromCart, cardItems, navigate } = useAppContext();
 
   return (
     product && (
-      <div className="border border-gray-500/20 rounded-md md:px-4 px-3 py-2 bg-white min-w-56 max-w-56 w-full">
+      <div
+        onClick={() => {
+          navigate(`/products/${product.category.toLowerCase()}/${product._id}`);
+          scrollTo(0, 0);
+        }}
+        className="border border-gray-500/20 rounded-md px-3 py-3 sm:px-4 bg-white w-full max-w-xs sm:max-w-sm mx-auto" // updated for responsive width
+      >
         <div className="group cursor-pointer flex items-center justify-center px-2">
           <img
-            className="group-hover:scale-105 transition max-w-26 md:max-w-36"
+            className="group-hover:scale-105 transition-transform duration-300 ease-in-out w-32 sm:w-36 h-auto object-contain" // updated for responsive image
             src={product.image[0]}
             alt={product.name}
           />
         </div>
-        <div className="text-gray-500/60 text-sm">
-          <p>{product.category}</p>
+
+        <div className="text-gray-500/60 text-sm mt-2"> 
+          <p className="capitalize">{product.category}</p> 
           <p className="text-gray-700 font-medium text-lg truncate w-full">
             {product.name}
           </p>
-          <div className="flex items-center gap-0.5">
+
+          <div className="flex items-center gap-1 mt-1"> 
             {Array(5)
               .fill("")
               .map((_, i) => (
@@ -31,41 +37,44 @@ const ProductCrad = ({ product }) => {
                   key={i}
                   src={i < 4 ? assets.star_icon : assets.star_dull_icon}
                   alt=""
-                  className="md:w-3,5 w-3"
+                  className="w-3 sm:w-4" 
                 />
               ))}
-            <p>({4})</p>
+            <p className="text-xs sm:text-sm">(4)</p> 
           </div>
+
           <div className="flex items-end justify-between mt-3">
-            <p className="md:text-xl text-base font-medium text-primary">
+            <p className="text-base sm:text-xl font-medium text-primary"> 
               ${product.offerPrice}{" "}
-              <span className="text-gray-500/60 md:text-sm text-xs line-through">
+              <span className="text-gray-500/60 text-xs sm:text-sm line-through">
                 ${product.price}
               </span>
             </p>
-                      <div onClick={(e) => { e.stopPropagation(); }} className="text-primary">
+
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="text-primary"
+            >
               {!cardItems[product._id] ? (
                 <button
-                  className="flex items-center justify-center gap-1 bg-primary/10 border border-primary/40 md:w-[80px] w-[64px] h-[34px] rounded cursor-pointer "
                   onClick={() => addToCart(product._id)}
+                  className="flex items-center justify-center gap-1 bg-primary/10 border border-primary/40 text-xs sm:text-sm w-16 sm:w-20 h-8 rounded" // responsive button
                 >
-                  <img src={assets.cart_icon} alt="cartIcon" />
+                  <img src={assets.cart_icon} alt="cartIcon" className="w-4 sm:w-5" /> 
                   Add
                 </button>
               ) : (
-                <div className="flex items-center justify-center gap-2 md:w-20 w-16 h-[34px] bg-primary/25 rounded select-none">
+                <div className="flex items-center justify-center gap-2 bg-primary/25 rounded w-16 sm:w-20 h-8 text-sm select-none">
                   <button
                     onClick={() => removeFromCart(product._id)}
-                    className="cursor-pointer text-md px-2 h-full"
+                    className="px-2"
                   >
                     -
                   </button>
-                  <span className="w-5 text-center">
-                    {cardItems[product._id]}
-                  </span>
+                  <span className="w-4 text-center">{cardItems[product._id]}</span>
                   <button
                     onClick={() => addToCart(product._id)}
-                    className="cursor-pointer text-md px-2 h-full"
+                    className="px-2"
                   >
                     +
                   </button>
