@@ -13,6 +13,7 @@ import ProductCategoies from "./components/ProductCategoies";
 
 
 import { AnimatePresence } from "framer-motion";
+import ProductDetails from "./pages/ProductDetails";
 
 const App = () => {
   const location = useLocation();
@@ -32,6 +33,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/products" element={<AllProduct />} />
             <Route path="/products/:category" element={<ProductCategoies />} />
+            <Route path="/products/:category/:id" element={<ProductDetails />} />
             <Route path="*" element={<Notfound />} />
           </Routes>
         </AnimatePresence>

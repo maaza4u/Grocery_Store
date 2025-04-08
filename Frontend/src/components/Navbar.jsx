@@ -8,7 +8,15 @@ const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const searchRef = useRef(null);
 
-  const { user, setUser, setShowUserLogin, navigate, searchQuary, setSearchQuary } = useAppContext();
+  const {
+    user,
+    setUser,
+    setShowUserLogin,
+    navigate,
+    searchQuary,
+    setSearchQuary,
+    getCartItemsCount,
+  } = useAppContext();
 
   const logout = () => {
     setUser(null);
@@ -39,12 +47,13 @@ const Navbar = () => {
         <img className="h-14 md:h-20" src={assets.logo_3} alt="logo" />
       </NavLink>
 
-      {/* Desktop Nav */}
+      {/* Desktop Menu */}
       <div className="hidden sm:flex items-center gap-8">
         <NavLink to="/">Home</NavLink>
         <NavLink to="/products">All Products</NavLink>
         <NavLink to="/">Contact</NavLink>
 
+        {/* Search */}
         <div className="flex items-center text-sm gap-2 border border-gray-300 px-3 rounded-full">
           <input
             onChange={(e) => setSearchQuary(e.target.value)}
@@ -55,16 +64,20 @@ const Navbar = () => {
           <img src={assets.search_icon} alt="search_icon" className="h-4 w-4" />
         </div>
 
+        {/* Cart Icon */}
         <div
           className="relative cursor-pointer"
           onClick={() => navigate("/cart")}
         >
           <img src={assets.nav_cart_icon} alt="cart" className="w-6" />
-          <button className="absolute -top-2 -right-3 text-xs text-white bg-primary-500 w-[18px] h-[18px] rounded-full">
-            3
-          </button>
+          
+            <span className="absolute -top-2 -right-3 text-xs text-white bg-red-500 w-[18px] h-[18px] rounded-full flex items-center justify-center">
+              {getCartItemsCount() || 0}
+            </span>
+          
         </div>
 
+        {/* Login/Profile */}
         {!user ? (
           <button
             onClick={() => setShowUserLogin(true)}
@@ -94,24 +107,26 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Icons */}
-      <div className="flex sm:hidden items-center gap-4">
-        {/* Search icon toggle */}
-        {!showSearch && (
-          <button onClick={() => setShowSearch(true)}>
-            <img src={assets.search_icon} alt="search" className="h-6 w-6" />
-          </button>
-        )}
-
-        {/* Cart */}
-        <button onClick={() => navigate("/cart")}>
-          <img src={assets.nav_cart_icon} alt="cart" className="h-6 w-6" />
-        </button>
-
-        {/* Hamburger */}
-        <button onClick={() => setMenuOpen(!menuOpen)}>
-          <img src={assets.menu_icon} alt="menu" className="h-6 w-6" />
-        </button>
-      </div>
+      {/* Mobile Icons */}
+<div className="flex sm:hidden items-center gap-4">
+  {!showSearch && (
+    <button onClick={() => setShowSearch(true)}>
+      <img src={assets.search_icon} alt="search" className="h-6 w-6" />
+    </button>
+  )}
+  <div
+    className="relative cursor-pointer"
+    onClick={() => navigate("/cart")}
+  >
+    <img src={assets.nav_cart_icon} alt="cart" className="h-6 w-6" />
+    <span className="absolute -top-2 -right-3 text-xs text-white bg-red-500 w-[18px] h-[18px] rounded-full flex items-center justify-center">
+      {getCartItemsCount() || 0}
+    </span>
+  </div>
+  <button onClick={() => setMenuOpen(!menuOpen)}>
+    <img src={assets.menu_icon} alt="menu" className="h-6 w-6" />
+  </button>
+</div>
 
       {/* Mobile Search */}
       {showSearch && (
@@ -127,7 +142,11 @@ const Navbar = () => {
               type="text"
               placeholder="Search products..."
             />
-            <img src={assets.search_icon} alt="search_icon" className="h-4 w-4" />
+            <img
+              src={assets.search_icon}
+              alt="search_icon"
+              className="h-4 w-4"
+            />
           </div>
         </div>
       )}
@@ -135,9 +154,15 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {menuOpen && (
         <div className="absolute top-[70px] left-0 w-full bg-white shadow-md py-5 px-4 flex flex-col gap-3 text-sm sm:hidden z-30">
-          <NavLink to="/" onClick={() => setMenuOpen(false)}>Home</NavLink>
-          <NavLink to="/products" onClick={() => setMenuOpen(false)}>All Products</NavLink>
-          <NavLink to="/" onClick={() => setMenuOpen(false)}>Contact</NavLink>
+          <NavLink to="/" onClick={() => setMenuOpen(false)}>
+            Home
+          </NavLink>
+          <NavLink to="/products" onClick={() => setMenuOpen(false)}>
+            All Products
+          </NavLink>
+          <NavLink to="/" onClick={() => setMenuOpen(false)}>
+            Contact
+          </NavLink>
 
           {!user ? (
             <button
