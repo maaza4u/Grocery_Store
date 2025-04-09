@@ -53,7 +53,6 @@ export const AppContextProvider = ({ children }) => {
     for (const item in cardItems) {
       totalCount += cardItems[item];
     }
-    console.log("Cart item count:", totalCount); // ✅ add this
     return totalCount;
   };
   

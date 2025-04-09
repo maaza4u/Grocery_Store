@@ -42,7 +42,7 @@ const ProductDetails = () => {
         <Link to={`/products/${product.category.toLowerCase()}`} className="mx-1">
           {product.category}
         </Link>
-        / <span className="text-indigo-500">{product.name}</span>
+        / <span className="text-primary">{product.name}</span>
       </p>
 
       {/* Main Layout */}
@@ -95,7 +95,7 @@ const ProductDetails = () => {
           {/* Price */}
           <div className="mt-6">
             <p className="text-gray-500 line-through">MRP: ₹{product.price}</p>
-            <p className="text-2xl font-bold text-indigo-600">₹{product.offerPrice}</p>
+            <p className="text-2xl font-bold text-black">₹{product.offerPrice}</p>
             <p className="text-sm text-gray-500">(inclusive of all taxes)</p>
           </div>
 
@@ -122,7 +122,7 @@ const ProductDetails = () => {
                 addToCart(product._id);
                 navigate("/cart");
               }}
-              className="flex-1 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-md transition"
+              className="flex-1 py-3 bg-primary hover:bg-primary-dull text-white font-medium rounded-md transition"
             >
               Buy Now
             </button>
