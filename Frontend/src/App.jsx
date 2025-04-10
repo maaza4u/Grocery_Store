@@ -15,6 +15,7 @@ import ProductCategoies from "./components/ProductCategoies";
 import { AnimatePresence } from "framer-motion";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
+import AddAddress from "./pages/AddAdress";
 
 const App = () => {
   const location = useLocation();
@@ -36,6 +37,7 @@ const App = () => {
             <Route path="/products/:category" element={<ProductCategoies />} />
             <Route path="/products/:category/:id" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/add-address" element={<AddAddress />} />
             <Route path="*" element={<Notfound />} />
           </Routes>
         </AnimatePresence>

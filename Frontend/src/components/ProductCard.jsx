@@ -45,9 +45,9 @@ const ProductCrad = ({ product }) => {
 
           <div className="flex items-end justify-between mt-3">
             <p className="text-base sm:text-xl font-medium text-primary"> 
-              ${product.offerPrice}{" "}
+            ₹{product.offerPrice}{" "}
               <span className="text-gray-500/60 text-xs sm:text-sm line-through">
-                ${product.price}
+              ₹{product.price}
               </span>
             </p>
 
