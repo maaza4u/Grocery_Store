@@ -48,7 +48,7 @@ const Footer = () => {
               alt="dummyLogoColored"
             />
             <p className="max-w-[410px] mt-6">
-              Welcome to our grocery store! We offer a wide range of fresh
+              Welcome to our Diamond Mart! We offer a wide range of fresh
               produce, quality products, and unbeatable deals to make your
               shopping experience delightful. Shop with us and enjoy the best
               service.
@@ -95,7 +95,7 @@ const Footer = () => {
         {/* Footer Bottom */}
         
         <p className="py-4 text-center text-sm md:text-base text-gray-500">
-          Copyright {new Date().getFullYear() } © Grocery Store. All Right Reserved.{" "}
+          Copyright {new Date().getFullYear() } © Diamond mart. All Right Reserved.{" "}
         </p>
       </div>
     </div>
